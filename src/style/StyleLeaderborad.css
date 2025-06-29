@@ -1,0 +1,41 @@
+@keyframes gradient-leaderboard {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float-leaderboard {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-gradient-leaderboard {
+  animation: gradient-leaderboard 15s ease infinite;
+  background-size: 400% 400%;
+}
+
+.animate-gradient-text-leaderboard {
+  animation: gradient-leaderboard 3s ease infinite;
+  background-size: 200% auto;
+}
+
+.animate-float-leaderboard {
+  animation: float-leaderboard 3s ease-in-out infinite;
+}
+
+.text-gradient-leaderboard {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400;
+}

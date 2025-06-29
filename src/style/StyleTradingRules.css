@@ -1,0 +1,54 @@
+@keyframes gradient-tradingrules {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float-tradingrules {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-fade-in-tradingrules {
+    animation: fadeIn-privacy 0.8s ease-out forwards;
+  }
+  
+
+.animate-gradient-tradingrules {
+  animation: gradient-tradingrules 15s ease infinite;
+  background-size: 400% 400%;
+}
+
+.animate-gradient-text-tradingrules {
+  animation: gradient-tradingrules 3s ease infinite;
+  background-size: 200% auto;
+}
+
+.animate-float-tradingrules {
+  animation: float 3s ease-in-out infinite;
+}
+
+.text-gradient-tradingrules {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400;
+}
+
+.rule-section-tradingrules {
+  @apply transition-all duration-500;
+}
+
+.rule-section-tradingrules:hover {
+  @apply transform -translate-x-2;
+}

@@ -1,0 +1,14 @@
+@keyframes fadeIn-testimonials {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-testimonials {
+  animation: fadeIn-testimonials 0.8s ease-out forwards;
+}

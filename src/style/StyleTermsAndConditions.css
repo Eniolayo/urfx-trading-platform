@@ -1,0 +1,124 @@
+@keyframes gradientFlow-tos {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float-tos {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulse-tos {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes shimmer-tos {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-gradient-tos {
+  background-size: 200% 200%;
+  animation: gradientFlow-tos 15s ease infinite;
+}
+
+.animate-float-tos {
+  animation: float-tos 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow-tos {
+  animation: pulse-tos 4s ease-in-out infinite;
+}
+
+.section-reveal-tos {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section-reveal-tos.visible-tos {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hover-glow-tos {
+  transition: all 0.3s ease-in-out;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+.shimmer-tos {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite linear;
+}
+
+.text-gradient-tos {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(90deg, #60A5FA, #A78BFA, #F472B6);
+  background-size: 200% auto;
+  animation: textGradient 4s linear infinite;
+}
+
+@keyframes textGradient {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.card-hover-tos {
+  transition: all 0.3s ease-in-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.bullet-point-tos {
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(45deg, #60A5FA, #A78BFA);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 12px;
+  animation: pulse 2s infinite;
+}

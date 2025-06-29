@@ -1,0 +1,177 @@
+import { useAtom, useAtomValue } from "jotai";
+// import CheckBoxCarousel from "../model/CheckBoxCarousel.js";
+import {
+  featureSectionAtom,
+  isAuthenticatedAtom,
+  navbarHeightAtom,
+  themeAtom,
+} from "@/store/atoms.js";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "@/app/store.js";
+import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { scrollToFeatureSectionFunction } from "@/utils/scrollToFeatureSectionFunction.js";
+import heroSectionBgDark from "/src/assets/HeroSection/hero-section-bg-dark.webp";
+import heroSectionBgLight from "/src/assets/HeroSection/hero-section-bg-light.webp";
+import heroSectionBgDarkMobile from "/src/assets/HeroSection/hero-section-bg-dark-mobile.webp";
+import heroSectionBgLightMobile from "/src/assets/HeroSection/hero-section-bg-light-mobile.webp";
+import GeneralButtonWithCss from "./GeneralButtonWithCss.js";
+import CarouselButton from "../heroSection/CarouselButton.js";
+
+export default function HeroSection() {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [isAuthenticated] = useAtom(isAuthenticatedAtom);
+  const metaAccounts = useSelector((state) => state.metaAccount.accounts);
+  const [featureSectionRef] = useAtom(featureSectionAtom);
+
+  // const checkBoxData = [
+  //   [
+  //     t("Up to $1M in capital"),
+  //     t("Backed by a Broker"),
+  //     t("90% Profit Split"),
+  //     t("Instant Funding"),
+  //     t("24 hours payout"),
+  //     t("100% Refund"),
+  //   ],
+  //   // [
+  //   //   t("Up to $1M starting capital"),
+  //   //   t("First Withdrawal On Demand"),
+  //   //   t("Advanced Trading Tools"),
+  //   //   t("Up to 90% Performance Split"),
+  //   //   t("Backed by a Broker"),
+  //   //   t("Bi-weekly Payouts Available"),
+  //   // ],
+  // ];
+
+  const themeAtomValue = useAtomValue(themeAtom);
+  const [bgURL, setBgURL] = useState<string>();
+  const [bgMobileURL, setBgMobileURL] = useState<string>();
+
+  useEffect(() => {
+    setBgURL(
+      themeAtomValue === "dark" ? heroSectionBgDark : heroSectionBgLight
+    );
+
+    setBgMobileURL(
+      themeAtomValue === "dark"
+        ? heroSectionBgDarkMobile
+        : heroSectionBgLightMobile
+    );
+  }, [themeAtomValue]);
+
+  const [navbarHeight] = useAtom(navbarHeightAtom);
+
+  return (
+    <div
+      style={{ height: `calc(100vh - ${navbarHeight}px - 3px)` }}
+      className="relative w-full overflow-hidden dark:bg-black dark:text-white bg-white text-black"
+    >
+      <div className="relative h-full w-full flex items-start">
+        <div className="w-full h-full">
+          <img
+            src={bgURL}
+            alt="HeroSectionBackground"
+            className="hidden sm:block sm:object-[20%_50%] w-full h-full object-cover"
+          />
+
+          <img
+            src={bgMobileURL}
+            alt="HeroSectionBackgroundMobile"
+            className="block object-[0%_80%] sm:hidden w-full h-full object-cover"
+          />
+        </div>
+
+        <div className="absolute inset-0 flex w-full z-10">
+          {/* Main Heading */}
+          <div className="flex sm:w-[80%] 2k:w-[70%] items-start sm:items-center p-3 sm:pl-[8%] h-full">
+            <div
+              className="flex mb-12 w-full animate-fade-in-up mt-6 sm:mt-0 gap-20 max-sm:flex-col relative 2k:gap-32"
+              style={{ animationDelay: "200ms" }}
+            >
+              <div className="w-full max-lg:mx-auto z-10 ">
+                <div className="relative mb-5 sm:mb-8 2k:mb-16">
+                  {/* subtitle The lading prop firm */}
+                  <div className="w-fit h-auto p-[1.5px] dark:bg-gradient-to-r dark:from-[#1CCDE6] dark:to-[#DBD633] flex justify-center items-center">
+                    <div className="w-fit dark:bg-[#1D2220] px-3 dark:bg-none dark:text-dark bg-gradient-to-r from-[#1CCDE6] via-[#9ED473] to-[#DBD633] p-1 flex items-center justify-center">
+                      <span
+                        className="bg-clip-text text-[12px] sm:text-[13px] xl:text-[16px] 2k:text-[24px] text-transparent font-messina font-bold"
+                        style={{
+                          backgroundImage:
+                            themeAtomValue === "dark"
+                              ? "linear-gradient(to left, #D7D536, #20CDE2)"
+                              : "none",
+                          color: themeAtomValue === "dark" ? "" : "black",
+                          display: "inline-block",
+                        }}
+                      >
+                        {t("The Leading Prop Trading Firm")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <h1 className="w-full text-[32px] md:text-[40px] xl:text-[48px] 2k:text-[72px] 2k:tracking-normal leading-tight sm:leading-none tracking-normal font-bold animate-gradient-x mb-5 sm:mb-10 2k:mb-16">
+                  {t("Empowering Ambitious")} <br />
+                  {t("Traders to Succeed")}
+                </h1>
+
+                <div className="w-full flex justify-start h-auto">
+                  <GeneralButtonWithCss
+                    onClick={() =>
+                      scrollToFeatureSectionFunction(
+                        metaAccounts,
+                        isAuthenticated,
+                        navigate,
+                        featureSectionRef
+                      )
+                    }
+                    blur={true}
+                    className="text-[14px] sm:text-[15px] md:text-[18px] w-[124px] h-[32px] sm:w-[142] sm:h-[36.816px] md:w-[162px] md:h-[42px] 2k:text-[27px] 2k:w-[243px] 2k:h-[63px]"
+                    bgClassName="dark:bg-dark dark:opacity-30 dark:bg-none bg-gradient-to-r from-[#7DDEE9] via-[#BBE0A5] to-[#E4E389]"
+                  >
+                    {t("Start Challenge")}
+                  </GeneralButtonWithCss>
+                </div>
+
+                <div className="flex w-full space-x-7 md:space-x-9 lg:space-x-24 2k:space-x-36  text-[16px] md:text-[19px] 2k:text-[35px] justify-start mt-8 sm:mt-10 2k:mt-16">
+                  {/* <CheckBoxCarousel checkBoxData={checkBoxData} /> */}
+                  <div className="flex flex-col space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <CarouselButton />
+                      <span>{t("Up to $1M in capital")}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <CarouselButton />
+                      <span>{t("Backed by a Broker")}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <CarouselButton />
+                      <span>{t("90% Profit Split")}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <CarouselButton />
+                      <span>{t("Instant Funding")}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <CarouselButton />
+                      <span>{t("24 hours payout")}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <CarouselButton />
+                      <span>{t("100% Refund")}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Stats Grid */}
+        </div>
+      </div>
+    </div>
+  );
+}

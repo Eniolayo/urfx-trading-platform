@@ -1,0 +1,310 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Creato Display';
+  src: url('/font/creato-display/CreatoDisplay-Regular.otf') format('truetype');
+  font-weight: 400; /* Regular */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Creato Display';
+  src: url('/font/creato-display/CreatoDisplay-Bold.otf') format('truetype');
+  font-weight: 600; /* Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Creato Display';
+  src: url('/font/creato-display/CreatoDisplay-Medium.otf') format('truetype');
+  font-weight: 500; /* Medium */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Messina';
+  src: url('/font/MessinaSansMono-Regular.woff2') format('woff2'),
+  url('/font/MessinaSansMono-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@layer base {
+  body {
+    @apply bg-gradient-to-b from-dark to-dark-100 text-gray-100 min-h-screen;
+    background-attachment: fixed;
+    font-family: "Creato Display", sans-serif;
+    margin: 0;
+    padding: 0;
+    letter-spacing: -0.0001em;
+    box-sizing: border-box;
+    background: black;
+  }
+
+
+  select {
+    @apply appearance-none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+  }
+
+  select option {
+    @apply bg-dark-100 text-white;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-200;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-dark-400 rounded-full hover:bg-dark-500 transition-colors;
+  }
+
+  ::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-glass backdrop-blur-xl border border-dark-300/50 shadow-glass;
+  }
+
+  .glass-panel-hover {
+    @apply hover:bg-glass-hover hover:shadow-glass-hover transition-all duration-300;
+  }
+
+  .premium-button {
+    @apply bg-accent text-white px-4 py-2 rounded-lg 
+           shadow-inner-light backdrop-blur-sm
+           hover:bg-accent-dark transition-all duration-300
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .premium-button-outline {
+    @apply border border-accent/30 text-accent px-4 py-2 rounded-lg
+           hover:bg-accent/10 transition-all duration-300;
+  }
+}
+
+
+/* Animations */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes infinite-scroll-tradingtech {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%); /* Adjust based on content height */
+  }
+}
+
+@keyframes float-medium {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes float-fast {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes gradient-x {
+  0%,
+  100% {
+    background-size: 200% 100%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 100%;
+    background-position: right center;
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-infinite-scroll-tradingtech {
+  animation: infinite-scroll-tradingtech linear infinite;
+}
+
+@media (max-width: 639px) {
+  .animate-infinite-scroll-testimonial {
+    animation-duration: 4s !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .animate-infinite-scroll-testimonial {
+    animation-duration: 6s !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .animate-infinite-scroll-testimonial {
+    animation-duration: 10s !important;
+  }
+}
+
+
+.animate-infinite-scroll-testimonial {
+  animation: infinite-scroll 20s linear infinite;
+}
+
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 5s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 4s ease-in-out infinite;
+}
+
+.animate-gradient-x {
+  animation: gradient-x 15s ease infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out forwards;
+}
+
+.animate-on-scroll {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0, 1);
+  transform: translateY(20px);
+}
+
+.animate-on-scroll.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 0.5s ease-in-out infinite;
+}
+
+.sendMessage-btn {
+  cursor: pointer;
+  margin-bottom: 3em;
+  padding: 1em;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: #64ffda;
+  font-weight: bold;
+  outline: 1px solid #64ffda;
+  transition: all ease-in-out 0.3s;
+}
+
+.bg-soft-radial-green {
+  background: radial-gradient(
+    circle 3200px at 80% 100%,
+    #d4cf25 0%,
+    #000000 30%,
+    #000000 100%
+  );
+}
+
+.bg-soft-radial-blue {
+  background: radial-gradient(
+    circle 3200px at 70% 100%,
+    #2b6647 0%,
+    #000000 30%,
+    #000000 100%
+  );
+}
+
+.custom-checkbox:not(:checked) {
+  background-color: #302F19;
+}
+
+.sendMessage-btn:hover {
+  transition: all ease-in-out 0.3s;
+  background-color: #64ffda;
+  color: #000;
+  cursor: pointer;
+  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+}
+
+
+.custom-checkbox {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #302F19;
+  border: 1px solid #45442E;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.custom-checkbox:checked {
+  background-color: #45442E; /* or your checked color */
+}
+
+.custom-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0px;
+  width: 6px;
+  height: 10px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}

@@ -1,0 +1,14 @@
+@keyframes fadeIn-privacy {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-privacy {
+  animation: fadeIn-privacy 0.8s ease-out forwards;
+}

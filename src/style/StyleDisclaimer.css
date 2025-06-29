@@ -1,0 +1,66 @@
+ @keyframes gradientFlow-disclaimer {
+   0% {
+     background-position: 0% 50%;
+   }
+   50% {
+     background-position: 100% 50%;
+   }
+   100% {
+     background-position: 0% 50%;
+   }
+ }
+ 
+ @keyframes float-disclaimer {
+   0% {
+     transform: translateY(0px);
+   }
+   50% {
+     transform: translateY(-10px);
+   }
+   100% {
+     transform: translateY(0px);
+   }
+ }
+ 
+ @keyframes pulse-disclaimer {
+   0% {
+     transform: scale(1);
+     opacity: 0.8;
+   }
+   50% {
+     transform: scale(1.05);
+     opacity: 0.4;
+   }
+   100% {
+     transform: scale(1);
+     opacity: 0.8;
+   }
+ }
+ 
+ .animate-gradient-disclaimer {
+   background-size: 200% 200%;
+   animation: gradientFlow-disclaimer 15s ease infinite;
+ }
+ 
+ .animate-float-disclaimer {
+   animation: float-disclaimer 6s ease-in-out infinite;
+ }
+ 
+ .animate-pulse-slow-disclaimer {
+   animation: pulse-disclaimer 4s ease-in-out infinite;
+ }
+ 
+ .section-reveal-disclaimer {
+   opacity: 0;
+   transform: translateY(20px);
+   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+ 
+ .section-reveal.visible {
+   opacity: 1;
+   transform: translateY(0);
+ }
+ 
+ .hover-glow:hover {
+   box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+ }

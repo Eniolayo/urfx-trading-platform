@@ -1,0 +1,41 @@
+<svg width="392" height="48" viewBox="0 0 392 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="392" height="48" fill="#1E1E1E"/>
+<g clip-path="url(#clip0_0_1)">
+<path d="M-114 -549C-114 -562.255 -103.255 -573 -90 -573H1302C1315.25 -573 1326 -562.255 1326 -549V303C1326 316.255 1315.25 327 1302 327H-90C-103.255 327 -114 316.255 -114 303V-549Z" fill="#0B0B0B"/>
+<g filter="url(#filter0_f_0_1)">
+<rect x="491.722" y="-35" width="866" height="866" rx="433" fill="url(#paint0_linear_0_1)" fill-opacity="0.6"/>
+</g>
+<g opacity="0.9">
+<rect x="0.5" y="0.5" width="391" height="47" fill="url(#paint1_linear_0_1)" fill-opacity="0.4"/>
+<rect x="0.5" y="0.5" width="391" height="47" stroke="url(#paint2_linear_0_1)"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_0_1" x="77.7222" y="-449" width="1694" height="1694" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="207" result="effect1_foregroundBlur_0_1"/>
+</filter>
+<linearGradient id="paint0_linear_0_1" x1="1357.72" y1="398" x2="491.722" y2="398" gradientUnits="userSpaceOnUse">
+<stop stop-color="#C3BE25"/>
+<stop offset="0.5" stop-color="#72C430"/>
+<stop offset="1" stop-color="#2AB5C9"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_1" x1="392" y1="24" x2="0" y2="24" gradientUnits="userSpaceOnUse">
+<stop stop-color="#DBD633"/>
+<stop offset="0.5" stop-color="#9ED473"/>
+<stop offset="1" stop-color="#1CCDE6"/>
+</linearGradient>
+<linearGradient id="paint2_linear_0_1" x1="392" y1="24" x2="0" y2="24" gradientUnits="userSpaceOnUse">
+<stop stop-color="#DBD633"/>
+<stop offset="0.15" stop-color="#DBD633"/>
+<stop offset="0.15" stop-color="#DBD633" stop-opacity="0"/>
+<stop offset="0.85" stop-color="#1CCDE6" stop-opacity="0"/>
+<stop offset="0.85" stop-color="#1CCDE6"/>
+<stop offset="1" stop-color="#1CCDE6"/>
+</linearGradient>
+<clipPath id="clip0_0_1">
+<path d="M-114 -549C-114 -562.255 -103.255 -573 -90 -573H1302C1315.25 -573 1326 -562.255 1326 -549V303C1326 316.255 1315.25 327 1302 327H-90C-103.255 327 -114 316.255 -114 303V-549Z" fill="white"/>
+</clipPath>
+</defs>
+</svg>
