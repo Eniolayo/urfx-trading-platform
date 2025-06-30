@@ -1,4 +1,5 @@
 import { themeAtom } from "@/store/atoms";
+import { applyTheme } from "@/utils/theme";
 import { useSetAtom } from "jotai";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -33,10 +34,18 @@ const ThemeToggleButton = () => {
     window.localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-    setThemeAtom(theme === "dark" ? "light" : "dark");
-  };
+  // const toggleTheme = () => {
+  //   setTheme(theme === "dark" ? "light" : "dark");
+  //   setThemeAtom(theme === "dark" ? "light" : "dark");
+  // };
+  function toggleTheme() {
+    const currentTheme = document.documentElement.classList.contains("dark")
+      ? "dark"
+      : "light";
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    localStorage.setItem("theme", newTheme);
+    applyTheme(newTheme);
+  }
 
   return (
     <StyledWrapper>

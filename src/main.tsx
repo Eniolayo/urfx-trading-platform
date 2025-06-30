@@ -14,6 +14,7 @@ import "swiper/css/navigation";
 import "./index.css";
 import { store } from "./app/store";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { initTheme } from "./utils/theme";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -35,6 +36,8 @@ const initialOptions = {
 };
 
 const root = document.getElementById("root");
+
+initTheme();
 
 if (!root) {
   throw new Error("Root element not found");

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { RotatingLines } from "react-loader-spinner";
 import { useTranslation } from "react-i18next";
-// import { Mail, PhoneCall, Send } from "lucide-react";
 import { env } from "@/config/env";
 import { formatPhoneNumber } from "@/utils/format";
 import axios from "@/utils/api";
@@ -11,15 +10,12 @@ import { toast } from "react-toastify";
 import Footer from "../Footer";
 import ContactUsHeaderBgDark from "/src/assets/Contactus/contact-us-header-bg-dark.svg";
 import ContactUsHeaderBgLight from "/src/assets/Contactus/contact-us-header-bg-light.svg";
-import { useAtomValue } from "jotai";
-import { themeAtom } from "@/store/atoms";
+import ContactUsOrbitHeaderMobile from "/src/assets/Contactus/contact-us-orbit-header-mobile.svg";
 import sendMessageButtonBgDark from "/src/assets/Contactus/send-message-button-bg-dark.svg";
 import sendMessageButtonBgLight from "/src/assets/Contactus/send-message-button-bg-light.svg";
 import emailIcon from "/src/assets/Contactus/email-icon.svg";
 import phoneIcon from "/src/assets/Contactus/phone-icon.svg";
 import telegramIcon from "/src/assets/Contactus/telegram-icon.svg";
-// import { telegram } from "@/api/telegram";
-
 
 interface ContactProps {
   email: string;
@@ -40,11 +36,6 @@ export default function ContactUs() {
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
-    // const contactUsTitle = document.getElementById("contactUs");
-    // if (contactUsTitle) {
-    //   contactUsTitle.scrollIntoView({ behavior: "smooth" });
-    // }
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -85,39 +76,34 @@ export default function ContactUs() {
     mutate(formData);
   };
 
-  const themeAtomValue = useAtomValue(themeAtom);
-  const [contactUsBgImage, setContactUsBgImage] = useState<string>();
-  const [sendMessageButtonBg, setSendMessageButtonBg] = useState<string>();
-
-  useEffect(() => {
-    setContactUsBgImage(
-      themeAtomValue == "dark" ? ContactUsHeaderBgDark : ContactUsHeaderBgLight
-    );
-
-    setSendMessageButtonBg(
-      themeAtomValue === "dark" ? sendMessageButtonBgDark : sendMessageButtonBgLight
-    )
-  });
-
-
   return (
     <div
       className="h-full w-full dark:bg-dark dark:text-white bg-white text-black"
       id="contactUs"
     >
       {/* Header Background */}
-      <div className="relative w-full">
+      <div className="relative min-h-[360px] w-full">
         <img
-          src={contactUsBgImage}
+          src={ContactUsHeaderBgDark}
           alt="ContactUsBackgroundImage"
-          className="w-full h-full object-cover"
+          className="w-full h-full hidden dark:block object-cover absolute"
+        />
+        <img
+          src={ContactUsHeaderBgLight}
+          alt="ContactUsBackgroundImage"
+          className="w-full h-full dark:hidden object-cover absolute"
+        />
+        <img
+          src={ContactUsOrbitHeaderMobile}
+          alt="ContactUsBackgroundImage"
+          className="block md:hidden size-[223px] -left-[63px] object-contain absolute bottom-[-20px]"
         />
         <div className="absolute flex flex-col justify-center items-center top-0 left-0 w-full h-full text-[48px] font-bold">
           <span className="w-fit h-fit">Contact Us</span>
           <span className="w-fit h-fit text-[18px] text-center">
             {t("Got a question? Need help with your account or challenge?")}{" "}
             <br />
-            {t("We’re here for you.")}
+            {t("We're here for you.")}
           </span>
         </div>
       </div>
@@ -125,8 +111,8 @@ export default function ContactUs() {
       <div className="py-16 px-2 sm:px-6 lg:px-6 animate-gradient-disclaimer">
         {/* Contact Sections */}
         <div className="space-y-8 w-full">
-          <div className="flex justify-center items-start">
-            <div className="w-[40%]">
+          <div className="flex flex-col md:flex-row justify-center items-start">
+            <div className="w-full md:w-[40%]">
               <section
                 ref={(el) => {
                   sectionsRef.current[0] = el;
@@ -221,7 +207,7 @@ export default function ContactUs() {
               ref={(el) => {
                 sectionsRef.current[1] = el;
               }}
-              className="section-reveal dark:bg-gradient-to-r dark:from-[#1D200F] dark:via-[#1B2416] dark:to-[#112720] bg-gradient-to-r from-[#1ECDE4] via-[#97D479] to-[#D9D636] bg-opacity-50 w-[40%] p-8 backdrop-blur-sm transform transition-all duration-300"
+              className="section-reveal dark:bg-gradient-to-r dark:from-[#1D200F] dark:via-[#1B2416] dark:to-[#112720] bg-gradient-to-r from-[#1ECDE4] via-[#97D479] to-[#D9D636] bg-opacity-50 w-full md:w-[40%] p-8 backdrop-blur-sm transform transition-all duration-300"
             >
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
@@ -314,8 +300,19 @@ export default function ContactUs() {
                     />
                   ) : (
                     <div className="relative w-full h-full flex items-center justify-center">
-                      <img src={sendMessageButtonBg} alt="ButtonBg" className="w-full h-full "/>
-                      <div className="absolute flex justify-center items-center text-center"><span>{t("Send Message")}</span></div>
+                      <img
+                        src={sendMessageButtonBgDark}
+                        alt="ButtonBg"
+                        className="w-full h-full hidden dark:block"
+                      />
+                      <img
+                        src={sendMessageButtonBgLight}
+                        alt="ButtonBg"
+                        className="w-full h-full dark:hidden"
+                      />
+                      <div className="absolute flex justify-center items-center text-center">
+                        <span>{t("Send Message")}</span>
+                      </div>
                     </div>
                   )}
                 </button>
