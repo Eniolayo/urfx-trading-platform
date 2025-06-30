@@ -25,25 +25,6 @@ export default function HeroSection() {
   const metaAccounts = useSelector((state) => state.metaAccount.accounts);
   const [featureSectionRef] = useAtom(featureSectionAtom);
 
-  // const checkBoxData = [
-  //   [
-  //     t("Up to $1M in capital"),
-  //     t("Backed by a Broker"),
-  //     t("90% Profit Split"),
-  //     t("Instant Funding"),
-  //     t("24 hours payout"),
-  //     t("100% Refund"),
-  //   ],
-  //   // [
-  //   //   t("Up to $1M starting capital"),
-  //   //   t("First Withdrawal On Demand"),
-  //   //   t("Advanced Trading Tools"),
-  //   //   t("Up to 90% Performance Split"),
-  //   //   t("Backed by a Broker"),
-  //   //   t("Bi-weekly Payouts Available"),
-  //   // ],
-  // ];
-
   const themeAtomValue = useAtomValue(themeAtom);
   const [bgURL, setBgURL] = useState<string>();
   const [bgMobileURL, setBgMobileURL] = useState<string>();

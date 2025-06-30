@@ -1,51 +1,24 @@
-import { themeAtom } from "@/store/atoms";
-import { applyTheme } from "@/utils/theme";
-import { useSetAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
-const getInitialTheme = (): "light" | "dark" => {
-  if (typeof window !== "undefined" && window.localStorage) {
-    const storedPrefs = window.localStorage.getItem("theme");
-    if (typeof storedPrefs === "string") {
-      return storedPrefs as "light" | "dark";
+function ThemeToggleButton() {
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      return (saved || (prefersDark ? "dark" : "light")) as "light" | "dark";
     }
-    // If no preference, use system setting
-    const userMedia = window.matchMedia("(prefers-color-scheme: dark)");
-    if (userMedia.matches) {
-      return "dark";
-    }
-  }
-  // Default to 'light'
-  return "light";
-};
+    return "light"; // Fallback for SSR (if ever used)
+  });
 
-const ThemeToggleButton = () => {
-  const setThemeAtom = useSetAtom(themeAtom);
-  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-    window.localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  // const toggleTheme = () => {
-  //   setTheme(theme === "dark" ? "light" : "dark");
-  //   setThemeAtom(theme === "dark" ? "light" : "dark");
-  // };
-  function toggleTheme() {
-    const currentTheme = document.documentElement.classList.contains("dark")
-      ? "dark"
-      : "light";
-    const newTheme = currentTheme === "dark" ? "light" : "dark";
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
     localStorage.setItem("theme", newTheme);
-    applyTheme(newTheme);
-  }
+    setTheme(newTheme);
+  };
 
   return (
     <StyledWrapper>
@@ -53,8 +26,8 @@ const ThemeToggleButton = () => {
         <input
           id="input"
           type="checkbox"
-          onClick={toggleTheme}
-          defaultChecked={theme === "dark" ? true : false}
+          onChange={toggleTheme}
+          checked={theme === "dark"}
         />
         <div className="slider round">
           <div className="sun-moon">
@@ -113,7 +86,7 @@ const ThemeToggleButton = () => {
       </label>
     </StyledWrapper>
   );
-};
+}
 
 const StyledWrapper = styled.div`
   .switch {
