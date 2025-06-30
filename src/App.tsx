@@ -43,6 +43,7 @@ import PaypalView from "./views/PaypalView";
 import VerifyEmailView from "./views/EmailVerifyView";
 import CongratForSignup from "./views/CongratForSignUp";
 import CalendarNews from "./components/user/CalendarNews";
+import AdminDashboardView from "./views/AdminDashboardView";
 
 
 function App() {
@@ -124,6 +125,8 @@ function App() {
                 <Route path="disclaimer" element={<Disclaimer />} />
                 <Route path="/oxapay" element={<OxapayView />} />
                 <Route path="/paypal" element={<PaypalView />} />
+                <Route path="admindb" element={<AdminDashboardView />} />
+
                 <Route
                   path="terms-&-conditions"
                   element={<TermsAndConditions />}
@@ -144,7 +147,7 @@ function App() {
               <Route path="/payment-success" element={<PaymentSuccess />} />
               <Route path="/certificate" element={<CertificateQRPage />} />
               <Route path="/profilesetting" element={<ProfileSettingView />} />
-              
+
               {/*Redirect route */}
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>

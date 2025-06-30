@@ -851,12 +851,13 @@ function GetFunded() {
                         {t("Choose Payment Method")}
                       </h2>
                       <div className="space-y-4">
-                        {paymentOption.map((method) => (
+                        {paymentOption.map((method, i) => (
                           <div
                             key={String(method[0])}
                             className="flex items-center"
                           >
                             <input
+                              disabled={i==0}
                               type="radio"
                               id={String(method[0])}
                               name="paymentMethod"
@@ -873,7 +874,7 @@ function GetFunded() {
                               htmlFor={String(method[0])}
                               className="ml-3 text-gray-300 font-medium cursor-pointer"
                             >
-                              {method[1]}
+                              {method[1]} {i==0 ? "(Not Available at this moment)" : ""}
                             </label>
                           </div>
                         ))}

@@ -106,8 +106,57 @@ export default function DashboardView() {
       : [];
 
     setRecentTrades([...temprecentTrades]); // safe now  }
+
+    setEquityStats(dashboardData.dailyGrowth?.map((item: any) => {
+      const normalized = Math.round((item.balance / dashboardData.highestBalance) * 100);
+      return { value: normalized };
+    }) || []);
+
+    setObjectives([
+      {
+        label: "Daily Loss Limit",
+        valueLeft: `$${(5000 - (dashboardData.dailyGrowth?.[0]?.profit || 0))?.toFixed(2)} Left`,
+        percentage: Math.max(
+          0,
+          100 - Math.abs((dashboardData.dailyGrowth?.[0]?.profit || 0) / 5000) * 100
+        ),
+        time: "18:19:20", // placeholder
+        details: [
+          { label: "Maximum daily loss", value: "$5,000.00" },
+          { label: "Today’s starting balance/ equity", value: `$${dashboardData.balance?.toFixed(2)}` },
+          {
+            label: "Threshold at",
+            value: `$${(dashboardData.balance - 5000)?.toFixed(2)}`
+          }
+        ],
+        completed: dashboardData.dailyGain >= 0
+      },
+      {
+        label: "Max Loss Limit",
+        valueLeft: `$${(10000 + dashboardData.profit)?.toFixed(2)} Left`,
+        percentage: Math.max(0, 100 - Math.abs((dashboardData.profit / 10000) * 100)),
+        time: "18:19:20",
+        details: [
+          { label: "Maximum loss", value: "$10,000.00" },
+          {
+            label: "Threshold at",
+            value: `$${(dashboardData.deposits - 10000)?.toFixed(2)}`
+          }
+        ],
+        completed: dashboardData.profit > -10000
+      },
+      {
+        label: "Profit Target",
+        valueLeft: `$${(8000 + dashboardData.profit)?.toFixed(2)} Left`,
+        percentage: Math.min(100, ((dashboardData.profit + 8000) / 8000) * 100),
+        time: "18:19:20",
+        details: [{ label: "Profit target", value: "$8000.00" }],
+        completed: dashboardData.profit >= 8000,
+        highlight: true
+      }
+    ]);
   }
-  
+
   const [index] = useState<string>("month");
   const [user] = useAtom(userAtom);
   const [accountIndex] = useState<number>(0);
@@ -193,10 +242,10 @@ export default function DashboardView() {
   }, []);
 
   const [navbarHeight] = useAtom(navbarHeightAtom);
-  const equityStats = dashboardData.dailyGrowth?.map((item: any) => {
+  const [equityStats, setEquityStats] = useState<any>(dashboardData.dailyGrowth?.map((item: any) => {
     const normalized = Math.round((item.balance / dashboardData.highestBalance) * 100);
     return { value: normalized };
-  });
+  }) || []);
 
 
   const winningData = [
@@ -219,7 +268,7 @@ export default function DashboardView() {
     { value: 20 }
   ];
 
-  const objectives = [
+  const [objectives, setObjectives] = useState<any>([
     {
       label: "Daily Loss Limit",
       valueLeft: `$${(5000 - (dashboardData.dailyGrowth?.[0]?.profit || 0))?.toFixed(2)} Left`,
@@ -261,7 +310,7 @@ export default function DashboardView() {
       completed: dashboardData.profit >= 8000,
       highlight: true
     }
-  ];
+  ]);
 
   const accountAnalytics = [
     { label: "Number of days", value: dashboardData.daysSinceTradingStarted?.toFixed(0) },
@@ -338,14 +387,14 @@ export default function DashboardView() {
             {/* Middle Section */}
             <div>
               <p className="text-gray-400 text-[14px]">Highest Winning Trade</p>
-              <h2 className="text-[24px] font-semibold text-green-400">${dashboardData.bestTrade}</h2>
+              <h2 className="text-[24px] font-semibold text-green-400">${dashboardData.bestTrade > 0 ? dashboardData.bestTrade : '0'}</h2>
             </div>
 
             {/* Bottom Row */}
             <div className="flex items-center justify-between mt-1">
               <p className="text-gray-400 text-sm">Number of Trades</p>
               <div className="flex items-center space-x-1 text-black dark:text-white font-semibold gap-1">
-                <span>{dashboardData.trades}</span>
+                <span>{dashboardData.bestTrade > 0 ? dashboardData.trades : '0'}</span>
                 <img src={lineupicon} alt="line up icon" />
               </div>
             </div>
@@ -367,14 +416,14 @@ export default function DashboardView() {
             {/* Middle Section */}
             <div>
               <p className="text-gray-400 text-[14px]">Lowest Losing Trade</p>
-              <h2 className="text-[24px] font-semibold text-red-400">${dashboardData.worstTrade}</h2>
+              <h2 className="text-[24px] font-semibold text-red-400">${dashboardData.worstTrade < 0 ? dashboardData.worstTrade : 0}</h2>
             </div>
 
             {/* Bottom Row */}
             <div className="flex items-center justify-between mt-1">
               <p className="text-gray-400 text-sm">Number of Trades</p>
               <div className="flex items-center space-x-1 text-black dark:text-white font-semibold gap-1">
-                <span>{dashboardData.trades}</span>
+                <span>{dashboardData.worstTrade < 0 ? dashboardData.trades : 0}</span>
                 <img src={lineupicon} alt="line up icon" />
               </div>
             </div>
@@ -426,7 +475,7 @@ export default function DashboardView() {
             <h2 className="text-[18px] font-medium flex items-center mb-2 gap-1">
               <img src={tickicon} alt="tick icon" /> Trading Objectives
             </h2>
-            {objectives?.map((obj, idx) => (
+            {objectives?.map((obj: any, idx: number) => (
               <div key={idx} className="mb-3">
                 <div className="flex gap-2 items-start">
                   <div className="w-[170px]">
@@ -438,7 +487,7 @@ export default function DashboardView() {
                   <div className="w-full">
                     <div className="flex justify-between">
                       <div className="text-base text-black dark:text-white font-medium">{obj.valueLeft}</div>
-                      <p className="text-base font-medium">{obj.percentage}%</p>
+                      <p className="text-base font-medium">{obj.percentage.toFixed(2)}%</p>
                     </div>
                     <div className="w-full h-[5px] rounded-full bg-zinc-700 mt-2 mb-2 relative overflow-hidden">
                       <div
@@ -451,7 +500,7 @@ export default function DashboardView() {
                       />
                     </div>
                     <div className="space-y-1 text-sm text-zinc-400">
-                      {obj.details.map((detail, i) => (
+                      {obj.details.map((detail: any, i: number) => (
                         <p key={i} className="text-[16px]">
                           {detail.label}:{" "}
                           <span className="text-black dark:text-white font-medium">{detail.value}</span>
