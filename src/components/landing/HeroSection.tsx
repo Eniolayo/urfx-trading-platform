@@ -83,7 +83,7 @@ export default function HeroSection() {
                   </div>
                 </div>
 
-                <h1 className="w-full text-[32px] md:text-[40px] xl:text-[48px] 2k:text-[72px] 2k:tracking-normal leading-tight sm:leading-none tracking-normal font-bold animate-gradient-x mb-5 sm:mb-10 2k:mb-16">
+                <h1 className="w-full text-[32px] md:min-w-[550px] md:text-[40px] xl:text-[48px] 2k:text-[72px] 2k:tracking-normal leading-tight sm:leading-none tracking-normal font-bold animate-gradient-x mb-5 sm:mb-10 2k:mb-16">
                   {t("Empowering Ambitious")} <br />
                   {t("Traders to Succeed")}
                 </h1>
