@@ -7,8 +7,8 @@ import { useTranslation } from "react-i18next";
 import { scrollToFeatureSectionFunction } from "@/utils/scrollToFeatureSectionFunction.js";
 import heroSectionBgDark from "/src/assets/HeroSection/hero-section-bg-dark.webp";
 import heroSectionBgLight from "/src/assets/HeroSection/hero-section-bg-light.webp";
-// import heroSectionBgDarkMobile from "/src/assets/HeroSection/hero-section-bg-dark-mobile.webp";
-// import heroSectionBgLightMobile from "/src/assets/HeroSection/hero-section-bg-light-mobile.webp";
+import heroSectionBgDarkMobile from "/src/assets/HeroSection/hero-section-bg-dark-mobile.webp";
+import heroSectionBgLightMobile from "/src/assets/HeroSection/hero-section-bg-light-mobile.webp";
 import GeneralButtonWithCss from "./GeneralButtonWithCss.js";
 import CarouselButton from "../heroSection/CarouselButton.js";
 
@@ -20,24 +20,53 @@ export default function HeroSection() {
   const [featureSectionRef] = useAtom(featureSectionAtom);
 
   return (
-    <div className="relative w-full overflow-hidden dark:bg-black min-[100vh] dark:text-white bg-white text-black">
-      <div className="relative h-full w-full flex items-start">
-        <div className="w-full h-full">
+    <div className="relative w-full overflow-hidden dark:bg-black h-[900px] dark:text-white bg-white text-black">
+      {/* Preload links for immediate loading */}
+      <link rel="preload" as="image" href={heroSectionBgDark} />
+      <link rel="preload" as="image" href={heroSectionBgLight} />
+      <link rel="preload" as="image" href={heroSectionBgDarkMobile} />
+      <link rel="preload" as="image" href={heroSectionBgLightMobile} />
+      <div className="relative h-full w-full flex items-end">
+        <div className=" md:ml-auto w-full md:w-auto h-full ">
           <img
             src={heroSectionBgDark}
             alt="HeroSectionBackground"
-            className="hidden dark:sm:block sm:hidden sm:object-[20%_50%] w-full h-full object-cover"
+            className="hidden dark:md:block w-full h-full object-cover sm:object-[20%_50%] [mask-image:linear-gradient(to_right,transparent,black_15%)]"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
+
           <img
             src={heroSectionBgLight}
             alt="HeroSectionBackground"
-            className="hidden dark:sm:hidden sm:block sm:object-[20%_50%] w-full h-full object-cover"
+            className="hidden md:dark:hidden md:block sm:object-[20%_50%] w-full h-full object-cover [mask-image:linear-gradient(to_right,transparent,black_15%)]"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+          />
+
+          <img
+            src={heroSectionBgDarkMobile}
+            alt="HeroSectionBackgroundMobile"
+            className="dark:block hidden object-[0%_80%] md:hidden w-full h-full object-cover"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+          />
+          <img
+            src={heroSectionBgLightMobile}
+            alt="HeroSectionBackgroundMobile"
+            className="block dark:hidden object-[0%_80%] md:hidden w-full h-full object-cover"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
         </div>
 
         <div className="absolute  h-full flex w-full z-10">
           {/* Main Heading */}
-          <div className="flex sm:w-[50%] 2k:w-[70%] items-start sm:items-center p-3 sm:pl-[8%] h-full">
+          <div className="flex md:w-[50%] 2k:w-[70%] items-start md:items-center p-3 sm:pl-[8%] h-full">
             <div
               className="flex mb-12 w-full animate-fade-in-up  mt-6 sm:mt-0 gap-20 max-sm:flex-col relative 2k:gap-32"
               style={{ animationDelay: "200ms" }}
