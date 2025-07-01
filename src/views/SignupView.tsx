@@ -6,16 +6,13 @@ import axios from "axios";
 import { env } from "@/config/env";
 import googleIcon from "/src/assets/SigninView/google-icon.svg";
 import { useTranslation } from "react-i18next"; // Import translation hook
-// import quoteIcon from "/src/assets/SigninView/quote-icon-dark.svg";
 import quoteIconDark from "/src/assets/SigninView/quote-icon-dark.svg";
 import quoteIconLight from "/src/assets/SigninView/quote-icon-light.svg";
 import avatar from "/src/assets/SigninView/avatar.svg";
-// import signinViewImage from "/src/assets/SigninView/login-image-light.webp";
 import laptop from "/src/assets/SigninView/laptop.webp";
 import VectorLogo from "/src/assets/SigninView/logo-vector.webp";
 import bgPoint from "/src/assets/SigninView/bg-point.svg";
 import ThemeToggleButton from "@/components/themeToggle/ThemeToggleButton";
-// import GeneralButton from "@/components/landing/GeneralButton";
 import mailIconDark from "/src/assets/SigninView/mail-icon-dark.svg";
 import mailIconLight from "/src/assets/SigninView/mail-icon-light.svg";
 import lockIconDark from "/src/assets/SigninView/lock-icon-dark.svg";
@@ -26,6 +23,7 @@ import logoDark from "/src/assets/Navbar/dark-logo.webp";
 import logoLight from "/src/assets/Navbar/light-logo.webp";
 import GeneralButtonWithCss from "@/components/landing/GeneralButtonWithCss";
 import LanguageSelectButton from "@/components/LanguageSelectButton";
+import { RotatingLines } from "react-loader-spinner";
 
 const SignupView: React.FC = () => {
   const navbarRef = useRef<HTMLDivElement>(null); // Create a ref for the navbar
@@ -34,6 +32,7 @@ const SignupView: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
@@ -68,6 +67,7 @@ const SignupView: React.FC = () => {
       return;
     }
     if (password == confirmPassword) {
+      setIsLoading(true);
       try {
         await axios
           .post(`${env.BASE_URL}/auth/register`, {
@@ -76,23 +76,48 @@ const SignupView: React.FC = () => {
           })
           .then((res) => {
             if (res.data.token) {
-              toast.success(t("Successfully registered! login please"));
-              navigate("/login");
+              // Send email verification request
+              axios
+                .post(`${env.BASE_URL}/auth/email-verify`, {
+                  email: email,
+                })
+                .then(() => {
+                  toast.success(
+                    t(
+                      "Registration successful! Please check your email to verify your account."
+                    )
+                  );
+                  // Store the email temporarily for the verification page
+                  localStorage.setItem("verification_email", email);
+                  // Navigate to the email verification page
+                  // navigate("/email-verify");
+                })
+                .catch((verifyErr) => {
+                  console.error("Failed to send verification email", verifyErr);
+                  toast.warn(
+                    t(
+                      "Account created but failed to send verification email. Please contact support."
+                    )
+                  );
+                  navigate("/login");
+                });
             } else {
               console.log(res.data);
             }
           })
           .catch((error) => {
             console.error("Failed", error);
-            if (error.status === 422) {
+            if (error.response && error.response.status === 422) {
               toast.error(t("Failed! Invalid email or password"));
             } else {
-              toast.warn(t("Failed! You have already have an account"));
+              toast.warn(t("Failed! You already have an account"));
             }
           });
       } catch (err) {
         console.log(err);
         toast.warn(t("Internal server error!"));
+      } finally {
+        setIsLoading(false);
       }
     } else {
       toast.warn(t("Password doesn't match!"));
@@ -112,13 +137,13 @@ const SignupView: React.FC = () => {
   const [lockIcon, setLockIcon] = useState<string>(lockIconLight);
   const [mailIcon, setMailIcon] = useState<string>(mailIconLight);
   const [quoteIcon, setQuoteIcon] = useState<string>();
-  
+
   const themeAtomValue = useAtomValue(themeAtom);
   useEffect(() => {
     setLogo(themeAtomValue === "dark" ? logoDark : logoLight);
     setLockIcon(themeAtomValue === "dark" ? lockIconDark : lockIconLight);
     setMailIcon(themeAtomValue === "dark" ? mailIconDark : mailIconLight);
-    setQuoteIcon(themeAtomValue === "dark" ? quoteIconDark : quoteIconLight)
+    setQuoteIcon(themeAtomValue === "dark" ? quoteIconDark : quoteIconLight);
   }, [themeAtomValue]);
 
   return (
@@ -141,7 +166,9 @@ const SignupView: React.FC = () => {
             <img src={logo} alt="Logo" className="w-[161px] h-[49px]" />
 
             <div className="flex w-fit items-center justify-center space-x-5">
-              <span className="hidden sm:block"><ThemeToggleButton /></span>
+              <span className="hidden sm:block">
+                <ThemeToggleButton />
+              </span>
               <p className="flex items-center cursor-pointer text-[16px]  space-x-5">
                 <span className="text-center hidden sm:flex justify-center">
                   {t("Already have an account?")}{" "}
@@ -264,14 +291,6 @@ const SignupView: React.FC = () => {
                 </div>
               </div>
 
-              {/* <button
-                type="submit"
-                className="w-full text-sm h-[56px] text-white mt-3"
-                onClick={handleRegister}
-              >
-                <GeneralButton inputText="Register" />
-              </button> */}
-
               <div className="w-full flex justify-start h-auto mt-12">
                 <GeneralButtonWithCss
                   onClick={() => handleRegister()}
@@ -280,7 +299,19 @@ const SignupView: React.FC = () => {
                   enableBackgroundAtTheBeginning={false}
                   enableHoverEffect={true}
                 >
-                  <span className="tracking-wide">{t("Register")}</span>
+                  {isLoading ? (
+                    <>
+                      <RotatingLines
+                        width={"28"}
+                        strokeWidth="5"
+                        strokeColor="white"
+                        animationDuration="0.75"
+                        ariaLabel="rotating-lines-loading"
+                      />
+                    </>
+                  ) : (
+                    <span className="tracking-wide">{t("Register")}</span>
+                  )}
                 </GeneralButtonWithCss>
               </div>
 
@@ -299,12 +330,6 @@ const SignupView: React.FC = () => {
         {/*Half Background Image Section */}
         <div className="hidden lg:block p-[2px] bg-gradient-to-r from-[#1CCDE5] via-[#9DD373] to-[#DBD633] w-[57%] h-[99%] rounded-xl mr-1">
           <div className="relative bg-gradient-to-tr dark:from-[#1d5e57] dark:via-[#425533] dark:to-[#5e5d1f]  w-full h-full  rounded-xl">
-            {/* <img
-            src={signinViewImage}
-            alt="SigninBackground"
-            className="w-full h-full object-fill dark:brightness-[65%]"
-          /> */}
-
             <img
               src={laptop}
               alt="laptop"
