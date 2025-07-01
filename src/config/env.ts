@@ -33,8 +33,9 @@ export const env = {
 
   //Backend URL
 
-  BASE_URL: import.meta.env.VITE_BASE_URL || "http://16.171.148.93:5000/api",
-  AVATAR_URL: import.meta.env.VITE_IMAGE_URL || "http://16.171.148.93:5000/api",
+  BASE_URL: import.meta.env.VITE_BASE_URL || "https://16.171.148.93:5000/api",
+  AVATAR_URL:
+    import.meta.env.VITE_IMAGE_URL || "https://16.171.148.93:5000/api",
 
   //
   JWT_SECRET: import.meta.env.VITE_JWT_SECRET || "MEET_ASTRO_SECRET",
