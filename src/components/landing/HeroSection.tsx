@@ -1,20 +1,14 @@
-import { useAtom, useAtomValue } from "jotai";
-// import CheckBoxCarousel from "../model/CheckBoxCarousel.js";
-import {
-  featureSectionAtom,
-  isAuthenticatedAtom,
-  navbarHeightAtom,
-  themeAtom,
-} from "@/store/atoms.js";
+import { useAtom } from "jotai";
+
+import { featureSectionAtom, isAuthenticatedAtom } from "@/store/atoms.js";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "@/app/store.js";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
 import { scrollToFeatureSectionFunction } from "@/utils/scrollToFeatureSectionFunction.js";
 import heroSectionBgDark from "/src/assets/HeroSection/hero-section-bg-dark.webp";
 import heroSectionBgLight from "/src/assets/HeroSection/hero-section-bg-light.webp";
-import heroSectionBgDarkMobile from "/src/assets/HeroSection/hero-section-bg-dark-mobile.webp";
-import heroSectionBgLightMobile from "/src/assets/HeroSection/hero-section-bg-light-mobile.webp";
+// import heroSectionBgDarkMobile from "/src/assets/HeroSection/hero-section-bg-dark-mobile.webp";
+// import heroSectionBgLightMobile from "/src/assets/HeroSection/hero-section-bg-light-mobile.webp";
 import GeneralButtonWithCss from "./GeneralButtonWithCss.js";
 import CarouselButton from "../heroSection/CarouselButton.js";
 
@@ -25,49 +19,27 @@ export default function HeroSection() {
   const metaAccounts = useSelector((state) => state.metaAccount.accounts);
   const [featureSectionRef] = useAtom(featureSectionAtom);
 
-  const themeAtomValue = useAtomValue(themeAtom);
-  const [bgURL, setBgURL] = useState<string>();
-  const [bgMobileURL, setBgMobileURL] = useState<string>();
-
-  useEffect(() => {
-    setBgURL(
-      themeAtomValue === "dark" ? heroSectionBgDark : heroSectionBgLight
-    );
-
-    setBgMobileURL(
-      themeAtomValue === "dark"
-        ? heroSectionBgDarkMobile
-        : heroSectionBgLightMobile
-    );
-  }, [themeAtomValue]);
-
-  const [navbarHeight] = useAtom(navbarHeightAtom);
-
   return (
-    <div
-      style={{ height: `calc(100vh - ${navbarHeight}px - 3px)` }}
-      className="relative w-full overflow-hidden dark:bg-black dark:text-white bg-white text-black"
-    >
+    <div className="relative w-full overflow-hidden dark:bg-black min-[100vh] dark:text-white bg-white text-black">
       <div className="relative h-full w-full flex items-start">
         <div className="w-full h-full">
           <img
-            src={bgURL}
+            src={heroSectionBgDark}
             alt="HeroSectionBackground"
-            className="hidden sm:block sm:object-[20%_50%] w-full h-full object-cover"
+            className="hidden dark:sm:block sm:hidden sm:object-[20%_50%] w-full h-full object-cover"
           />
-
           <img
-            src={bgMobileURL}
-            alt="HeroSectionBackgroundMobile"
-            className="block object-[0%_80%] sm:hidden w-full h-full object-cover"
+            src={heroSectionBgLight}
+            alt="HeroSectionBackground"
+            className="hidden dark:sm:hidden sm:block sm:object-[20%_50%] w-full h-full object-cover"
           />
         </div>
 
-        <div className="absolute inset-0 flex w-full z-10">
+        <div className="absolute  h-full flex w-full z-10">
           {/* Main Heading */}
-          <div className="flex sm:w-[80%] 2k:w-[70%] items-start sm:items-center p-3 sm:pl-[8%] h-full">
+          <div className="flex sm:w-[50%] 2k:w-[70%] items-start sm:items-center p-3 sm:pl-[8%] h-full">
             <div
-              className="flex mb-12 w-full animate-fade-in-up mt-6 sm:mt-0 gap-20 max-sm:flex-col relative 2k:gap-32"
+              className="flex mb-12 w-full animate-fade-in-up  mt-6 sm:mt-0 gap-20 max-sm:flex-col relative 2k:gap-32"
               style={{ animationDelay: "200ms" }}
             >
               <div className="w-full max-lg:mx-auto z-10 ">
@@ -75,17 +47,7 @@ export default function HeroSection() {
                   {/* subtitle The lading prop firm */}
                   <div className="w-fit h-auto p-[1.5px] dark:bg-gradient-to-r dark:from-[#1CCDE6] dark:to-[#DBD633] flex justify-center items-center">
                     <div className="w-fit dark:bg-[#1D2220] px-3 dark:bg-none dark:text-dark bg-gradient-to-r from-[#1CCDE6] via-[#9ED473] to-[#DBD633] p-1 flex items-center justify-center">
-                      <span
-                        className="bg-clip-text text-[12px] sm:text-[13px] xl:text-[16px] 2k:text-[24px] text-transparent font-messina font-bold"
-                        style={{
-                          backgroundImage:
-                            themeAtomValue === "dark"
-                              ? "linear-gradient(to left, #D7D536, #20CDE2)"
-                              : "none",
-                          color: themeAtomValue === "dark" ? "" : "black",
-                          display: "inline-block",
-                        }}
-                      >
+                      <span className="bg-clip-text text-[12px] sm:text-[13px] xl:text-[16px] 2k:text-[24px] text-black dark:text-transparent font-messina font-bold dark:bg-gradient-to-l dark:from-[#20CDE2] dark:to-[#D7D536]">
                         {t("The Leading Prop Trading Firm")}
                       </span>
                     </div>
