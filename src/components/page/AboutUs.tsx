@@ -1,14 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Footer from "../Footer";
 import { useTranslation } from "react-i18next";
 import headerBgDark from "/src/assets/AboutUs/about-us-header-bg-dark.webp";
+import headerBgMobileDark from "/src/assets/AboutUs/about-us-header-bg-dark-mobile.svg";
+import headerBgMobileLight from "/src/assets/AboutUs/about-us-header-bg-light-mobile.webp";
 import headerBgLight from "/src/assets/AboutUs/about-us-header-bg-light.webp";
-import { useAtom, useAtomValue } from "jotai";
-import {
-  featureSectionAtom,
-  isAuthenticatedAtom,
-  themeAtom,
-} from "@/store/atoms";
+import { useAtom } from "jotai";
+import { featureSectionAtom, isAuthenticatedAtom } from "@/store/atoms";
 import missionImageDark from "/src/assets/AboutUs/mission-image-dark.webp";
 import missionImageLight from "/src/assets/AboutUs/mission-image-light.webp";
 import payoutImageDark from "/src/assets/AboutUs/payout-image-dark.webp";
@@ -67,42 +65,40 @@ export default function AboutUs() {
     return () => observer.disconnect();
   }, []);
 
-  const [headerBg, setHeaderBg] = useState<string>();
-  const themeAtomValue = useAtomValue(themeAtom);
-  const [missionImage, setMissionImage] = useState<string>();
-  const [payoutImage, setPayoutImage] = useState<string>();
-  const [conditionImage, setConditionImage] = useState<string>();
-  const [platformImage, setPlatformImage] = useState<string>();
-  const [checkIcon, setCheckIcon] = useState<string>();
-  useEffect(() => {
-    setHeaderBg(themeAtomValue === "dark" ? headerBgDark : headerBgLight);
-    setMissionImage(
-      themeAtomValue === "dark" ? missionImageDark : missionImageLight
-    );
-    setPayoutImage(
-      themeAtomValue === "dark" ? payoutImageDark : payoutImageLight
-    );
-    setConditionImage(
-      themeAtomValue === "dark" ? conditionImageDark : conditionImageLight
-    );
-    setPlatformImage(
-      themeAtomValue === "dark" ? platformImageDark : platformImageLight
-    );
-    setCheckIcon(themeAtomValue === "dark" ? checkIconDark : checkIconLight);
-  }, [themeAtomValue]);
-
   return (
     <div
       className="relative h-full w-full dark:bg-black dark:text-white bg-white text-black"
       id="aboutUsSection"
     >
       {/* Header Section */}
-      <div className="relative w-full h-[669px]">
+      <div className="relative w-full h-[350px] md:h-[550px]">
+        {/* Preload links for immediate loading */}
+        <link rel="preload" as="image" href={headerBgDark} />
+        <link rel="preload" as="image" href={headerBgLight} />
+        <link rel="preload" as="image" href={headerBgMobileDark} />
+        <link rel="preload" as="image" href={headerBgMobileLight} />
+
         <img
-          src={headerBg}
+          src={headerBgDark}
           alt="HeaderBackground"
-          className="w-full h-full bg-cover"
+          className="hidden dark:md:block w-full h-full bg-cover"
         />
+        <img
+          src={headerBgLight}
+          alt="HeaderBackground"
+          className="hidden md:dark:hidden md:block w-full h-full bg-cover"
+        />
+        <img
+          src={headerBgMobileDark}
+          alt="HeaderBackgroundMobile"
+          className="dark:block hidden md:hidden w-full h-full bg-cover"
+        />
+        <img
+          src={headerBgMobileLight}
+          alt="HeaderBackgroundMobile"
+          className="block dark:hidden md:hidden w-full h-full bg-cover"
+        />
+
         <div className="absolute flex justify-center items-center w-full h-full inset-0">
           <div className="relative flex w-full h-[60%] flex-col items-center ">
             <span className="text-[48px] font-bold top-[100px]">
@@ -133,7 +129,20 @@ export default function AboutUs() {
         </div>
 
         <div className="w-fit">
-          <img src={missionImage} alt="MissionImage" className="w-fit" />
+          {/* Preload links for immediate loading */}
+          <link rel="preload" as="image" href={missionImageDark} />
+          <link rel="preload" as="image" href={missionImageLight} />
+
+          <img
+            src={missionImageDark}
+            alt="MissionImage"
+            className="hidden dark:block w-fit"
+          />
+          <img
+            src={missionImageLight}
+            alt="MissionImage"
+            className="block dark:hidden w-fit"
+          />
         </div>
       </div>
 
@@ -151,7 +160,20 @@ export default function AboutUs() {
       {/* image Section */}
       <div className="flex justify-center w-full space-x-3">
         <div className="relative w-[397px] h-[392px]">
-          <img src={payoutImage} alt="PayoutImage" className="w-full h-full" />
+          {/* Preload links for immediate loading */}
+          <link rel="preload" as="image" href={payoutImageDark} />
+          <link rel="preload" as="image" href={payoutImageLight} />
+
+          <img
+            src={payoutImageDark}
+            alt="PayoutImage"
+            className="hidden dark:block w-full h-full"
+          />
+          <img
+            src={payoutImageLight}
+            alt="PayoutImage"
+            className="block dark:hidden w-full h-full"
+          />
           <div className="absolute flex flex-col items-start justify-end inset-0 p-5">
             <p className="font-bold text-[24px]">
               {t("Guaranteed")} <br /> {t("Payouts")}
@@ -165,10 +187,19 @@ export default function AboutUs() {
         </div>
 
         <div className=" relative w-[397px] h-[392px]">
+          {/* Preload links for immediate loading */}
+          <link rel="preload" as="image" href={conditionImageDark} />
+          <link rel="preload" as="image" href={conditionImageLight} />
+
           <img
-            src={conditionImage}
+            src={conditionImageDark}
             alt="ConditionImage"
-            className="w-full h-full"
+            className="hidden dark:block w-full h-full"
+          />
+          <img
+            src={conditionImageLight}
+            alt="ConditionImage"
+            className="block dark:hidden w-full h-full"
           />
           <div className="absolute flex flex-col items-start justify-end inset-0 p-5">
             <p className="font-bold text-[24px]">
@@ -183,10 +214,19 @@ export default function AboutUs() {
         </div>
 
         <div className="relative w-[397px] h-[392px]">
+          {/* Preload links for immediate loading */}
+          <link rel="preload" as="image" href={platformImageDark} />
+          <link rel="preload" as="image" href={platformImageLight} />
+
           <img
-            src={platformImage}
+            src={platformImageDark}
             alt="PlatformImage"
-            className="w-full h-full"
+            className="hidden dark:block w-full h-full"
+          />
+          <img
+            src={platformImageLight}
+            alt="PlatformImage"
+            className="block dark:hidden w-full h-full"
           />
           <div className="absolute flex flex-col items-start justify-end inset-0 p-5">
             <p className="font-bold text-[24px]">
@@ -288,23 +328,63 @@ export default function AboutUs() {
         <div className="absolute inset-0 flex">
           <div className="w-1/2 flex items-center justify-center p-10">
             <div className="flex flex-col w-fit h-fit space-y-5">
+              {/* Preload links for immediate loading */}
+              <link rel="preload" as="image" href={checkIconDark} />
+              <link rel="preload" as="image" href={checkIconLight} />
+
               <p className="font-bold text-[48px]">
                 {t("Our Promise to")} <br /> {t("Every Trader")}
               </p>
               <div className="flex">
-                <img src={checkIcon} alt="CheckIcon" />
+                <img
+                  src={checkIconDark}
+                  alt="CheckIcon"
+                  className="hidden dark:block"
+                />
+                <img
+                  src={checkIconLight}
+                  alt="CheckIcon"
+                  className="block dark:hidden"
+                />
                 {t("Real-Time Performance Tracking")}
               </div>
               <div className="flex">
-                <img src={checkIcon} alt="CheckIcon" />
+                <img
+                  src={checkIconDark}
+                  alt="CheckIcon"
+                  className="hidden dark:block"
+                />
+                <img
+                  src={checkIconLight}
+                  alt="CheckIcon"
+                  className="block dark:hidden"
+                />
                 {t("No hidden rules")}
               </div>
               <div className="flex">
-                <img src={checkIcon} alt="CheckIcon" />
+                <img
+                  src={checkIconDark}
+                  alt="CheckIcon"
+                  className="hidden dark:block"
+                />
+                <img
+                  src={checkIconLight}
+                  alt="CheckIcon"
+                  className="block dark:hidden"
+                />
                 {t("No delays on payouts")}
               </div>
               <div className="flex">
-                <img src={checkIcon} alt="CheckIcon" />
+                <img
+                  src={checkIconDark}
+                  alt="CheckIcon"
+                  className="hidden dark:block"
+                />
+                <img
+                  src={checkIconLight}
+                  alt="CheckIcon"
+                  className="block dark:hidden"
+                />
                 {t("No BS—just real support")}
               </div>
               <div className="w-full flex justify-center mt-10">
@@ -336,8 +416,8 @@ export default function AboutUs() {
       </div>
 
       {/* FAQ Section */}
-      <FaqSection/>
-      
+      <FaqSection />
+
       <div className="mt-24">
         <Footer />
       </div>
