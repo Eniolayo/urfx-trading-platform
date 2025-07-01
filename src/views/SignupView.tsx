@@ -66,6 +66,8 @@ const SignupView: React.FC = () => {
       toast.warn(t("Password must be at least 8 characters long!"));
       return;
     }
+    console.log("email", email);
+    console.log("password", password);
     if (password == confirmPassword) {
       setIsLoading(true);
       try {
