@@ -33,9 +33,8 @@ export const env = {
 
   //Backend URL
 
-  BASE_URL: import.meta.env.VITE_BASE_URL || "https://api.ur-fx.com:5000/api",
-  AVATAR_URL:
-    import.meta.env.VITE_IMAGE_URL || "https://api.ur-fx.com:5000/api",
+  BASE_URL: import.meta.env.VITE_BASE_URL || "https://api.ur-fx.com/api",
+  AVATAR_URL: import.meta.env.VITE_IMAGE_URL || "https://api.ur-fx.com/api",
 
   //
   JWT_SECRET: import.meta.env.VITE_JWT_SECRET || "MEET_ASTRO_SECRET",
